@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import MainPage from "./components/MainPage.vue";
+import { store } from "./common/store.js";
 
+store.getMainPageData();
 export default {
   name: "app",
   components: {
-    HelloWorld,
     MainPage
   }
 };

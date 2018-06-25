@@ -9,6 +9,7 @@
 
 <script>
 import Article from "./Article.vue";
+import { store } from "../common/store";
 
 export default {
   name: "MainPage",
@@ -16,8 +17,8 @@ export default {
     Article
   },
   data() {
-    let data = { title: "Title" };
-    return data;
+    let mainPageData = store.loadMainPageData();
+    return mainPageData;
   }
 };
 </script>
