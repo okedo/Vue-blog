@@ -6,9 +6,8 @@ Vue.use(Vuex);
 const mainPage = {
     state: {
         mainPage: {
-            title: 'title',
-            text: '',
-            id:0
+            title: 'Main title',
+            text: 'Main text',
         }
     },
     actions: {},
@@ -24,8 +23,14 @@ const articles = {
     state: {
         articles: [
             {
-                title: 'title',
-                text: 'text'
+                id: 1,
+                title: 'Article title',
+                text: 'Article text'
+            },
+            {
+                id: 2,
+                title: 'Article title2',
+                text: 'Article text2'
             }
         ]
     }

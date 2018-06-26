@@ -1,13 +1,16 @@
 <template>
+<div>
+  <h1>{{article.title}}</h1>
   <div>
-    {{text}}
+    {{article.text}}
   </div>
+</div>
 </template>
 
 <script>
 export default {
   name: "Article",
-  props: ["articleId"],
+  props: ["article"],
   data() {
     return this.$store.getters.articles[this.articleId];
   }

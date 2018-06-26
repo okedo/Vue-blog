@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div>
+    <h1>
       {{title}}
+    </h1>
+    <div>
+      {{text}}
     </div>
-    <Article v-bind:articleId="id"></Article>
+    <Article v-for="article in this.$store.getters.articles" v-bind:article = "article" v-bind:key="article.id"></Article>
   </div>
 </template>
 
