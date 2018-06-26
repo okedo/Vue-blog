@@ -20,6 +20,9 @@ export default {
   },
   data() {
     return this.$store.getters.mainPageData;
+  },
+  created () {
+    this.$store.dispatch('loadMainPage');
   }
 };
 </script>

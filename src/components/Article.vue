@@ -13,6 +13,9 @@ export default {
   props: ["article"],
   data() {
     return this.$store.getters.articles[this.articleId];
+  },
+  created () {
+    this.$store.dispatch('loadArticles');
   }
 };
 </script>
