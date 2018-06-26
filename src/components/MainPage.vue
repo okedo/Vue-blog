@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <Auth/>
+    </div>
     <h1>
       {{title}}
     </h1>
@@ -12,17 +15,20 @@
 
 <script>
 import Article from "./Article.vue";
+import Auth from "./Auth.vue";
 
 export default {
   name: "MainPage",
   components: {
-    Article
+    Article,
+    Auth
   },
   data() {
     return this.$store.getters.mainPageData;
   },
-  created () {
-    this.$store.dispatch('loadMainPage');
+  created() {
+    this.$store.dispatch("loadMainPage");
+    this.$store.dispatch("loadArticles");
   }
 };
 </script>
