@@ -1,19 +1,53 @@
-export let store = {
-    debug: true,
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+const mainPage = {
     state: {
-        mainPage: {},
-        articles: [],
-        sessionDate: new Date(),
-        userToken: ''
+        mainPage: {
+            title: 'title',
+            text: '',
+            id:0
+        }
     },
-    loadMainPageData(page = 1) {
-        fetch('/main/' + page)
-            .then(function (response) {
-                this.state.MainPage.text = response.text;
-                this.state.MainPage.title = response.title;
-            })
+    actions: {},
+    mutations: {},
+    getters: {
+        mainPageData(state) {
+            return state.mainPage;
+        }
     },
-    getMainPageData(){
-        return this.state.mainPage;
+}
+
+const articles = {
+    state: {
+        articles: [
+            {
+                title: 'title',
+                text: 'text'
+            }
+        ]
     }
-};
+    ,
+    mutations: {
+        ADD_ARTICLE(state, article) {
+            state.articles.push(article)
+        }
+    },
+    actions: {
+        addArticle({ commit }, article) {
+            commit('ADD_ARTICLE', article)
+        }
+    },
+    getters: {
+        articles(state) {
+            return state.articles;
+        }
+    }
+}
+
+export const store = new Vuex.Store({
+    modules: { articles, mainPage }
+});
+

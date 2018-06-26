@@ -7,10 +7,9 @@
 <script>
 export default {
   name: "Article",
-  template: "./article.component.html",
+  props: ["articleId"],
   data() {
-    let data = { text: "text" };
-    return data;
+    return this.$store.getters.articles[this.articleId];
   }
 };
 </script>

@@ -3,13 +3,12 @@
     <div>
       {{title}}
     </div>
-    <Article></Article>
+    <Article v-bind:articleId="id"></Article>
   </div>
 </template>
 
 <script>
 import Article from "./Article.vue";
-import { store } from "../common/store";
 
 export default {
   name: "MainPage",
@@ -17,8 +16,7 @@ export default {
     Article
   },
   data() {
-    let mainPageData = store.loadMainPageData();
-    return mainPageData;
+    return this.$store.getters.mainPageData;
   }
 };
 </script>

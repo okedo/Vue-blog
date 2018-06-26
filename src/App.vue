@@ -9,9 +9,9 @@
 import MainPage from "./components/MainPage.vue";
 import { store } from "./common/store.js";
 
-store.getMainPageData();
 export default {
   name: "app",
+  store,
   components: {
     MainPage
   }
