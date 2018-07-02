@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="/article/new">Add new</router-link>
     <div>
       <Auth/>
     </div>
@@ -25,10 +26,6 @@ export default {
   },
   data() {
     return this.$store.getters.mainPageData;
-  },
-  created() {
-    this.$store.dispatch("loadMainPage");
-    this.$store.dispatch("loadArticles");
   }
 };
 </script>

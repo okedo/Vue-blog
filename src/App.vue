@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <MainPage></MainPage>
+    <router-view/>
   </div>
 </template>
 
@@ -13,6 +13,10 @@ export default {
   store,
   components: {
     MainPage
+  },
+  created() {
+    this.$store.dispatch("loadMainPage");
+    this.$store.dispatch("loadArticles");
   }
 };
 </script>
