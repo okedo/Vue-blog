@@ -1,14 +1,11 @@
 <template>
   <div>
-    <router-link to="/article/new">Add new</router-link>
-    <div>
-      <Auth/>
-    </div>
+    <router-link to="/article/new" v-if="isLogged">Add new</router-link>
     <h1>
-      {{title}}
+      {{pageData.title}}
     </h1>
     <div>
-      {{text}}
+      {{pageData.text}}
     </div>
     <Article v-for="article in this.$store.getters.articles" v-bind:article = "article" v-bind:key="article.id"></Article>
   </div>
@@ -16,16 +13,17 @@
 
 <script>
 import Article from "./Article.vue";
-import Auth from "./Auth.vue";
 
 export default {
   name: "MainPage",
   components: {
-    Article,
-    Auth
+    Article
   },
   data() {
-    return this.$store.getters.mainPageData;
+    return {
+      pageData: this.$store.getters.mainPageData,
+      isLogged: this.$store.getters.isLogged
+    };
   }
 };
 </script>

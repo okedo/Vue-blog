@@ -37,7 +37,8 @@ const authentification = {
     state: {
         isLogged: false,
         userId: '',
-        username: ''
+        username: '',
+        errorMessage: ''
     },
     mutations: {
         LOG_ON(state, credentials) {
@@ -48,15 +49,16 @@ const authentification = {
                 headers: {
                     "Content-Type": "application/json; charset=utf-8"
                 }
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                state.isLogged = !!data;
+                state.id = data.id;
+                state.userName = data.userName;
+            }).catch(error => {
+                state.isLogged = false;
+                state.errorMessage = error.message;
             })
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    state.isLogged = !!data;
-                    state.id = data.id;
-                    state.userName = data.userName;
-                });
         }
     },
     actions: {
@@ -73,6 +75,9 @@ const authentification = {
                 userName: state.userName,
                 userId: state.userId
             };
+        },
+        authError(state) {
+            return state.errorMessage;
         }
     }
 };
