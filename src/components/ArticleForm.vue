@@ -24,7 +24,6 @@ export default {
   methods: {
     save() {
       this.$store.dispatch("addArticle", {
-        id: this.userId,
         title: this.title,
         text: this.text
       });

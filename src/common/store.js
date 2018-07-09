@@ -6,13 +6,13 @@ Vue.use(Vuex);
 const mainPage = {
     state: {
         mainPage: {
-            title: "Main title",
-            text: "Main text"
+            title: "",
+            text: ""
         }
     },
     mutations: {
         LOAD_MAIN_PAGE(state) {
-            fetch("/main")
+            fetch("http://localhost:3000/main", { mode: "cors" })
                 .then(response => response.json())
                 .then(data => {
                     state.mainPage.title = data.title;
@@ -41,9 +41,13 @@ const authentification = {
     },
     mutations: {
         LOG_ON(state, credentials) {
-            fetch("logon", {
+            fetch("http://localhost:3000/logon", {
                 method: "post",
-                body: JSON.stringify(credentials)
+                mode: "cors",
+                body: JSON.stringify(credentials),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                }
             })
                 .then(response => {
                     return response.json();
@@ -75,28 +79,16 @@ const authentification = {
 
 const articles = {
     state: {
-        articles: [
-            {
-                id: 1,
-                title: "Article title",
-                text: "Article text"
-            },
-            {
-                id: 2,
-                title: "Article title2",
-                text: "Article text2"
-            },
-            {
-                id: 3,
-                title: "Article title2",
-                text: "Article text2"
-            }
-        ]
+        articles: []
     },
     mutations: {
         ADD_ARTICLE(state, article) {
-            fetch("/article/new", {
+            fetch("http://localhost:3000/article/new", {
                 method: "post",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
                 body: JSON.stringify(article)
             })
                 .then(response => {
@@ -107,10 +99,10 @@ const articles = {
                 });
         },
         LOAD_ARTICLES(state) {
-            fetch("/article")
+            fetch("http://localhost:3000/articles", { mode: "cors" })
                 .then(resp => resp.json())
                 .then(response => {
-                    state.articles.push(response);
+                    state.articles = response;
                 })
                 .catch();
         }
