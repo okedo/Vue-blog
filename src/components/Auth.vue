@@ -1,4 +1,5 @@
 <template>
+<div>
   <div v-if="isLogged !== true" class="login-form-wrapper">
     <input type="text" v-model="login" class="login-form-input" name="login" id="login" placeholder="Your login">
     <input type="password" v-model="password" class="login-form-input" name="password" id="password" placeholder="Your password">
@@ -11,6 +12,7 @@
     <span v-if="!isLogged && authError">
       {{authError}}
     </span>
+  </div>
   </div>
 </template>
 
