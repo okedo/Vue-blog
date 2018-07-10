@@ -15,7 +15,10 @@ export default {
   },
   data() {
     console.log(this.$route.params.id);
-    return this.$store.getters.articles[this.$route.params.id];
+    return this.$store.getters.articles[this.$route.params._id];
+  },
+  created() {
+    this.$store.dispatch("loadArticle", id);
   }
 };
 </script>

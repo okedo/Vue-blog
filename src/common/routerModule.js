@@ -19,7 +19,7 @@ export const router = new VueRouter({
             component: ArticleForm
         },
         {
-            path: '/article/:id',
+            path: '/article/:_id',
             name: 'article-detail',
             component: ArticleDetail
         }

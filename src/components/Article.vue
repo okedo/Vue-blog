@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getUrl() {
-      return "/article/" + this.article.id;
+      return "/article/" + this.article._id;
     }
   }
 };
