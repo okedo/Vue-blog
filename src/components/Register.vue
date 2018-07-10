@@ -2,7 +2,8 @@
 <div>
   <div>
    <input type="text" v-model="newLogin" name="login" id="login">
-   <input type="password" v-model="newPassword" name="password" id="password">
+   <input type="password" v-model="newPassword" name="password" id="password" placeholder="password">
+   <input type="password" v-model="newPasswordConfirmation" name="password" id="password" placeholder="repeat password">
    <button v-on:click="registerNewUser">register</button>
   </div>
   <div>
@@ -18,13 +19,38 @@ import { router } from "../common/routerModule.js";
 export default {
   name: "Register",
   data() {
-    return {};
+    return this.$store.getters.registrationData;
   },
   methods: {
-    register() {
+    isEmailValid(email) {
+      const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return emailPattern.test(email);
+    },
+
+    isPasswordValid(password) {
+      const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/;
+      return password.lengh() >= 4 && passwordPattern.test(password);
+    },
+
+    validateForm() {
+      if (this.isEmailValid(this.newLogin)) {
+        if (
+          this.isPasswordValid(this.newPassword) &&
+          this.isPasswordValid(this.newPasswordConfirmation)
+        ) {
+          if (this.newPassword === this.newPasswordConfirmation) {
+            this.registerNewUser();
+          }
+        }
+      }
+      return false;
+    },
+
+    registerNewUser() {
       this.$store.dispatch("registerNewUser", {
-        login: this.login,
-        password: this.password
+        newLogin: this.newLogin,
+        newPassword: this.newPassword,
+        newPasswordConfirmation: newPasswordConfirmation
       });
     }
   }
