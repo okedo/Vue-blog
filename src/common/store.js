@@ -59,7 +59,7 @@ const authentification = {
         })
         .then(data => {
           state.isLogged = !!data;
-          state.id = data.id;
+          state.userId = data._id;
           state.userName = data.userName;
         });
     }
@@ -90,7 +90,7 @@ const registration = {
     registrationData: {
       newLogin: "",
       newPassword: "",
-      newPasswordconfirmation: "",
+      newPasswordConfirmation: "",
       registerError: ""
     }
   },
@@ -99,10 +99,10 @@ const registration = {
       fetch("http://localhost:3000/register", {
         method: "post",
         mode: "cors",
+        body: JSON.stringify(userData),
         headers: {
           "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify(userData)
+        }
       })
         .then(response => {
           return response.json();
@@ -171,5 +171,5 @@ const articles = {
 };
 
 export const store = new Vuex.Store({
-  modules: { articles, mainPage, authentification }
+  modules: { articles, mainPage, authentification, registration }
 });

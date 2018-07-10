@@ -1,9 +1,9 @@
 <template>
 <div>
   <div>
-   <input type="text" v-model="newLogin" name="login" id="login">
-   <input type="password" v-model="newPassword" name="password" id="password" placeholder="password">
-   <input type="password" v-model="newPasswordConfirmation" name="password" id="password" placeholder="repeat password">
+   <input type="text" v-model="newLogin" name="login" id="newLogin">
+   <input type="password" v-model="newPassword" name="newPassword" id="newPassword" placeholder="password">
+   <input type="password" v-model="newPasswordConfirmation" name="newPasswordConfirmation" id="newPasswordConfirmation" placeholder="repeat password">
    <button v-on:click="registerNewUser">register</button>
   </div>
   <div>
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { router } from "../common/routerModule.js";
 export default {
   name: "Register",
   data() {
@@ -47,9 +46,8 @@ export default {
 
     registerNewUser() {
       this.$store.dispatch("registerNewUser", {
-        newLogin: this.newLogin,
-        newPassword: this.newPassword,
-        newPasswordConfirmation: newPasswordConfirmation
+        login: this.newLogin,
+        password: this.newPassword,
       });
     }
   }

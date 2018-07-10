@@ -14,11 +14,10 @@ export default {
     Article
   },
   data() {
-    console.log(this.$route.params.id);
     return this.$store.getters.articles[this.$route.params._id];
   },
   created() {
-    this.$store.dispatch("loadArticle", id);
+    this.$store.dispatch("loadArticle", this.$route.params._id);
   }
 };
 </script>

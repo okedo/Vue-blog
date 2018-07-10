@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import MainPage from '../components/MainPage.vue';
 import ArticleForm from '../components/ArticleForm.vue';
 import ArticleDetail from '../components/ArticleDetail.vue';
-import ArticleDetail from '../components/Register.vue';
+import Register from '../components/Register.vue';
 
 Vue.use(VueRouter);
 
