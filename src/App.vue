@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Auth/>
     <router-view/>
   </div>
 </template>
@@ -7,12 +8,14 @@
 <script>
 import MainPage from "./components/MainPage.vue";
 import { store } from "./common/store.js";
+import Auth from "./components/Auth.vue";
 
 export default {
   name: "app",
   store,
   components: {
-    MainPage
+    MainPage,
+    Auth
   },
   created() {
     this.$store.dispatch("loadMainPage");
