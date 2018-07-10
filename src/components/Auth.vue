@@ -1,11 +1,11 @@
 <template>
 <div>
-  <div v-if="isLogged !== true" class="login-form-wrapper">
+  <div v-if="!isLogged" class="login-form-wrapper">
     <input type="text" v-model="login" class="login-form-input" name="login" id="login" placeholder="Your login">
     <input type="password" v-model="password" class="login-form-input" name="password" id="password" placeholder="Your password">
     <div class="btn-wrapper">
       <button v-on:click="logOn" class="login-btn">log in</button>
-      <button v-if="isLogged !== true" v-on:click="registerNewUser" class="register-btn">register</button>
+      <button v-if="!isLogged" v-on:click="registerNewUser" class="register-btn">register</button>
     </div>
   </div>
   <div>
@@ -44,7 +44,7 @@ export default {
 
 <style scoped>
 .login-btn{
-  ont-weight: 700;
+  font-weight: 700;
   color: white;
   text-decoration: none;
   padding: .8em 1em calc(.8em + 3px);
@@ -62,7 +62,7 @@ export default {
   box-shadow: 0 3px rgb(33,147,90) inset; 
 }
 .register-btn{
-  ont-weight: 700;
+  font-weight: 700;
   color: white;
   text-decoration: none;
   padding: .8em 1em calc(.8em + 3px);
