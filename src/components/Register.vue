@@ -18,7 +18,10 @@
 export default {
   name: "Register",
   data() {
-    return this.$store.getters.registrationData;
+    return {
+      newLogin: "",
+      newPassword: ""
+    };
   },
   methods: {
     isEmailValid(email) {
@@ -47,7 +50,7 @@ export default {
     registerNewUser() {
       this.$store.dispatch("registerNewUser", {
         login: this.newLogin,
-        password: this.newPassword,
+        password: this.newPassword
       });
     }
   }

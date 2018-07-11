@@ -9,7 +9,7 @@
     </div>
   </div>
   <div>
-    <span v-if="!isLogged && authError">
+    <span v-if="!isAuthorized() && authError">
       {{authError}}
     </span>
   </div>
@@ -22,10 +22,9 @@ export default {
   name: "Auth",
   data() {
     return {
-      isLogged: this.$store.getters.isLogged,
-      authError: this.$store.getters.authError,
-      password: this.$store.getters.userData.password,
-      login: this.$store.getters.userData.login
+      authError: "",
+      password: "",
+      login: ""
     };
   },
   methods: {
