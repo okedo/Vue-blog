@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/article/new" v-if="isLogged">Add new</router-link>
+    <router-link to="/article/new" v-if="isAuthorized()">Add new</router-link>
     <h1>
       {{pageData.title}}
     </h1>
@@ -22,8 +22,12 @@ export default {
   data() {
     return {
       pageData: this.$store.getters.mainPageData,
-      isLogged: this.$store.getters.isLogged
     };
+  },
+  methods: {
+    isAuthorized() {
+      return this.$store.getters.isLogged;
+    }
   }
 };
 </script>

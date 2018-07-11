@@ -1,11 +1,11 @@
 <template>
 <div>
-  <div v-if="!isLogged" class="login-form-wrapper">
+  <div v-if="!isAuthorized()" class="login-form-wrapper">
     <input type="text" v-model="login" class="login-form-input" name="login" id="login" placeholder="Your login">
     <input type="password" v-model="password" class="login-form-input" name="password" id="password" placeholder="Your password">
     <div class="btn-wrapper">
       <button v-on:click="logOn" class="login-btn">log in</button>
-      <button v-if="!isLogged" v-on:click="registerNewUser" class="register-btn">register</button>
+      <button v-if="!isAuthorized()" v-on:click="registerNewUser" class="register-btn">register</button>
     </div>
   </div>
   <div>
@@ -37,6 +37,9 @@ export default {
     },
     registerNewUser() {
       router.push('/register');
+    },
+    isAuthorized() {
+      return this.$store.getters.isLogged;
     }
   }
 };
