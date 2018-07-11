@@ -15,7 +15,7 @@ export default {
     return {
       title: "",
       text: "",
-      userId: this.$store.getters.userData.userName
+      userId: this.$store.getters.userData.userId
     };
   },
   mounted() {

@@ -37,7 +37,7 @@ const authentification = {
   state: {
     isLogged: false,
     userId: "",
-    username: "",
+    login: "",
     errorMessage: ""
   },
   mutations: {
@@ -60,7 +60,7 @@ const authentification = {
         .then(data => {
           state.isLogged = !!data;
           state.userId = data._id;
-          state.userName = data.userName;
+          state.login = data.login;
         });
     }
   },
@@ -75,7 +75,7 @@ const authentification = {
     },
     userData(state) {
       return {
-        userName: state.userName,
+        userName: state.login,
         userId: state.userId
       };
     },
