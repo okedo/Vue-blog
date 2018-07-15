@@ -59,14 +59,23 @@ const authentification = {
         })
         .then(data => {
           state.isLogged = !!data;
-          state.userId = data._id;
+          state.userId = data.id;
           state.login = data.login;
         });
+    },
+    LOG_OUT(state) {
+      state.isLogged = false;
+      state.userId = '';
+      state.login = "";
+      state.errorMessage = "";
     }
   },
   actions: {
     logOn({ commit }, credentials) {
       commit("LOG_ON", credentials);
+    },
+    logOut({ commit }) {
+      commit("LOG_OUT");
     }
   },
   getters: {
@@ -110,7 +119,7 @@ const registration = {
         .catch(error => {
           this.store.registerError = error.message;
         })
-        .then(data => {});
+        .then(data => { });
     }
   },
   actions: {
