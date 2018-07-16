@@ -65,7 +65,7 @@ const authentification = {
     },
     LOG_OUT(state) {
       state.isLogged = false;
-      state.userId = '';
+      state.userId = "";
       state.login = "";
       state.errorMessage = "";
     }
@@ -100,7 +100,8 @@ const registration = {
       newLogin: "",
       newPassword: "",
       newPasswordConfirmation: "",
-      registerError: ""
+      registerError: "",
+      registrationOk: false
     }
   },
   mutations: {
@@ -119,7 +120,9 @@ const registration = {
         .catch(error => {
           this.store.registerError = error.message;
         })
-        .then(data => { });
+        .then(data => {
+          this.store.registrationOk = true;
+        });
     }
   },
   actions: {
@@ -130,6 +133,12 @@ const registration = {
   getters: {
     registrationData(state) {
       return state.registrationData;
+    },
+    registrationOk(state) {
+      return state.registrationOk;
+    },
+    registrationError(state) {
+      return state.registrationError;
     }
   }
 };

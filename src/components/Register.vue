@@ -1,14 +1,14 @@
 <template>
 <div>
-  <div>
+  <div v-if="!registrationSuccess()">
    <input type="text" v-model="newLogin" name="login" id="newLogin">
    <input type="password" v-model="newPassword" name="newPassword" id="newPassword" placeholder="password">
    <input type="password" v-model="newPasswordConfirmation" name="newPasswordConfirmation" id="newPasswordConfirmation" placeholder="repeat password">
    <button v-on:click="registerNewUser">register</button>
   </div>
   <div>
-    <span v-if="registerError">
-      {{registerError}}
+    <span v-if="registrationFail()">
+      {{registrationFail()}}
     </span>
   </div>
 </div>
@@ -52,6 +52,12 @@ export default {
         login: this.newLogin,
         password: this.newPassword
       });
+    },
+    registrationSuccess() {
+      return this.$store.getters.registrationOk;
+    },
+    registrationFail() {
+      return this.$store.getters.registrationError;
     }
   }
 };
