@@ -100,7 +100,7 @@ const registration = {
       newLogin: "",
       newPassword: "",
       newPasswordConfirmation: "",
-      registrationError: "",
+      registrationError: false,
       registrationOk: false
     }
   },
@@ -118,10 +118,11 @@ const registration = {
           return response.json();
         })
         .then(() => {
-          state.registrationOk = true;
+          state.registrationData.registrationOk = true;
+          state.registrationData.registrationError = false;
         })
         .catch(error => {
-          state.registrationError = error.message;
+          state.registrationData.registrationError = error.message;
         });
     }
   },
@@ -132,13 +133,13 @@ const registration = {
   },
   getters: {
     registrationData(state) {
-      return state.registrationData;
+      return state.registrationData.registrationData;
     },
     registrationOk(state) {
-      return state.registrationOk;
+      return state.registrationData.registrationOk;
     },
     registrationError(state) {
-      return state.registrationError;
+      return state.registrationData.registrationError;
     }
   }
 };

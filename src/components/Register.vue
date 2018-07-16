@@ -7,8 +7,11 @@
    <button v-on:click="registerNewUser">register</button>
   </div>
   <div>
-    <span v-if="registrationFail()">
+    <span v-if="registrationFail() && !registrationSuccess()">
       Registration error! - {{registrationFail()}}
+    </span>
+    <span v-if="!registrationFail() && registrationSuccess()">
+      Registration completed!
     </span>
   </div>
 </div>
