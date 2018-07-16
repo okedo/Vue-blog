@@ -8,7 +8,7 @@
   </div>
   <div>
     <span v-if="registrationFail()">
-      {{registrationFail()}}
+      Registration error! - {{registrationFail()}}
     </span>
   </div>
 </div>
@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       newLogin: "",
-      newPassword: ""
+      newPassword: "",
+      newPasswordConfirmation: ""
     };
   },
   methods: {

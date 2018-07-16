@@ -53,14 +53,14 @@ const authentification = {
         .then(response => {
           return response.json();
         })
-        .catch(error => {
-          state.isLogged = false;
-          state.errorMessage = error.message;
-        })
         .then(data => {
           state.isLogged = !!data;
           state.userId = data.id;
           state.login = data.login;
+        })
+        .catch(error => {
+          state.isLogged = false;
+          state.errorMessage = error.message;
         });
     },
     LOG_OUT(state) {
@@ -100,7 +100,7 @@ const registration = {
       newLogin: "",
       newPassword: "",
       newPasswordConfirmation: "",
-      registerError: "",
+      registrationError: "",
       registrationOk: false
     }
   },
@@ -117,11 +117,11 @@ const registration = {
         .then(response => {
           return response.json();
         })
-        .catch(error => {
-          this.store.registerError = error.message;
+        .then(() => {
+          state.registrationOk = true;
         })
-        .then(data => {
-          this.store.registrationOk = true;
+        .catch(error => {
+          state.registrationError = error.message;
         });
     }
   },
