@@ -8,6 +8,7 @@
       {{pageData.text}}
     </div>
     <Article v-for="article in this.$store.getters.articles" v-bind:article = "article" v-bind:key="article.id"></Article>
+    <div v-if="loadArticlesError()">Please reload page</div>
   </div>
 </template>
 
@@ -27,6 +28,9 @@ export default {
   methods: {
     isAuthorized() {
       return this.$store.getters.isLogged;
+    },
+    loadArticlesError() {
+      this.$store.getters.articlesLoadError;
     }
   }
 };

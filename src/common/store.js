@@ -146,7 +146,8 @@ const registration = {
 
 const articles = {
   state: {
-    articles: []
+    articles: [],
+    loadError: false
   },
   mutations: {
     ADD_ARTICLE(state, article) {
@@ -171,7 +172,9 @@ const articles = {
         .then(response => {
           state.articles = response;
         })
-        .catch();
+        .catch(error => {
+          state.articlesLoadError = error;
+        });
     }
   },
   actions: {
@@ -185,6 +188,9 @@ const articles = {
   getters: {
     articles(state) {
       return state.articles;
+    },
+    articlesLoadError(state) {
+      return state.articlesLoadError;
     }
   }
 };
