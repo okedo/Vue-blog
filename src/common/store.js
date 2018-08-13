@@ -53,19 +53,19 @@ const authentification = {
         .then(response => {
           return response.json();
         })
-        .catch(error => {
-          state.isLogged = false;
-          state.errorMessage = error.message;
-        })
         .then(data => {
           state.isLogged = !!data;
           state.userId = data.id;
           state.login = data.login;
+        })
+        .catch(error => {
+          state.isLogged = false;
+          state.errorMessage = error.message;
         });
     },
     LOG_OUT(state) {
       state.isLogged = false;
-      state.userId = '';
+      state.userId = "";
       state.login = "";
       state.errorMessage = "";
     }
@@ -100,7 +100,8 @@ const registration = {
       newLogin: "",
       newPassword: "",
       newPasswordConfirmation: "",
-      registerError: ""
+      registrationError: false,
+      registrationOk: false
     }
   },
   mutations: {
@@ -116,8 +117,9 @@ const registration = {
         .then(response => {
           return response.json();
         })
-        .catch(error => {
-          this.store.registerError = error.message;
+        .then(() => {
+          state.registrationData.registrationOk = true;
+          state.registrationData.registrationError = false;
         })
         .then(() => { });
     }
@@ -129,14 +131,21 @@ const registration = {
   },
   getters: {
     registrationData(state) {
-      return state.registrationData;
+      return state.registrationData.registrationData;
+    },
+    registrationOk(state) {
+      return state.registrationData.registrationOk;
+    },
+    registrationError(state) {
+      return state.registrationData.registrationError;
     }
   }
 };
 
 const articles = {
   state: {
-    articles: []
+    articles: [],
+    loadError: false
   },
   mutations: {
     ADD_ARTICLE(state, article) {
@@ -188,6 +197,9 @@ const articles = {
   getters: {
     articles(state) {
       return state.articles;
+    },
+    articlesLoadError(state) {
+      return state.articlesLoadError;
     }
   }
 };

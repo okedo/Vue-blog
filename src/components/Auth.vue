@@ -5,7 +5,7 @@
     <input type="password" v-model="password" class="login-form-input" name="password" id="password" placeholder="Your password">
     <div class="btn-wrapper">
       <button v-on:click="logOn" class="login-btn">log in</button>
-      <button v-if="!isAuthorized()" v-on:click="registerNewUser" class="register-btn">register</button>
+      <button v-if="!isAuthorized()"  v-on:click="registerNewUser" class="register-btn">register</button>
     </div>
   </div>
   <div>
