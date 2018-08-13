@@ -7,7 +7,7 @@
     <div>
       {{pageData.text}}
     </div>
-    <Article v-for="article in this.$store.getters.articles" v-bind:article = "article" v-bind:key="article.id"></Article>
+    <Article v-for="article in this.$store.getters.articles" v-bind:id="article.id" v-bind:article = "article" v-bind:key="article.id"></Article>
   </div>
 </template>
 

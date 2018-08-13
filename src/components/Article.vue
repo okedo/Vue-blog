@@ -13,9 +13,6 @@
 export default {
   name: "Article",
   props: ["article"],
-  data() {
-    return this.$store.getters.articles[this.articleId];
-  },
   methods: {
     getUrl() {
       return "/article/" + this.article._id;
@@ -32,5 +29,6 @@ export default {
   color: #000000;
   padding: 20px 0 10px;
   display: inline-block;
+  cursor: pointer;
 }
 </style>

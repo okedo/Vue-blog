@@ -119,7 +119,7 @@ const registration = {
         .catch(error => {
           this.store.registerError = error.message;
         })
-        .then(data => { });
+        .then(() => { });
     }
   },
   actions: {
@@ -140,7 +140,7 @@ const articles = {
   },
   mutations: {
     ADD_ARTICLE(state, article) {
-      fetch("http://localhost:3000/article/new", {
+      fetch("http://localhost:3000/articles/new", {
         method: "post",
         mode: "cors",
         headers: {
@@ -162,6 +162,16 @@ const articles = {
           state.articles = response;
         })
         .catch();
+    },
+    UPDATE_ARTICLE_DETAILES(state, id) {
+      let currentArticle = state.articles.find(value => value._id == id);
+      if (currentArticle) {
+        fetch(`http://localhost:3000/articles/${id}`, { mode: "cors" })
+          .then(resp => resp.json())
+          .then(response => {
+            currentArticle = response;
+          })
+      }
     }
   },
   actions: {
@@ -170,6 +180,9 @@ const articles = {
     },
     loadArticles({ commit }) {
       commit("LOAD_ARTICLES");
+    },
+    updateArticleDetails({ commit }, id) {
+      commit("UPDATE_ARTICLE_DETAILES", id)
     }
   },
   getters: {

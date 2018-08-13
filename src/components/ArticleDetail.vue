@@ -17,7 +17,7 @@ export default {
     return this.$store.getters.articles[this.$route.params._id];
   },
   created() {
-    this.$store.dispatch("loadArticle", this.$route.params._id);
+    this.$store.dispatch("updateArticleDetails", this.$route.params._id);
   }
 };
 </script>
