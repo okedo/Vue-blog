@@ -1,5 +1,6 @@
 <template>
  <div>
+  <div v-if="isLogged"></div>
   <img src="articleData.imgSrc"/>
   <Article v-bind:article = "articleData" v-bind:key="articleData._id"></Article>
   <div>
@@ -17,9 +18,11 @@ export default {
   components: {
     Article
   },
-  // data() {
-  //   return { articleData: this.$store.getters.articleData };
-  // },
+  data() {
+    return {
+      isLogged: this.$store.getters.isLogged
+    };
+  },
   created() {
     this.$store.dispatch("loadSeparateArticle", this.$route.params._id);
   },

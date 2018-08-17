@@ -106,10 +106,11 @@ export default {
   box-shadow: 0 0 3px #aaa;
 }
 .login-form-wrapper {
+  display: inline-block;
+  text-align: left;
   width: 250px;
   padding: 25px;
   box-sizing: border-box;
-  position: absolute;
   top: 0;
   left: 0;
 }
