@@ -1,6 +1,10 @@
 <template>
  <div>
-  <Article v-bind:article = "article" v-bind:key="article.id"></Article>
+  <img src="articleData.imgSrc"/>
+  <Article v-bind:article = "articleData" v-bind:key="articleData._id"></Article>
+  <div>
+    Comments
+  </div>
 </div>
 </template>
 
@@ -8,16 +12,21 @@
 import Article from "./Article.vue";
 
 export default {
-  props: ['article'],
+  props: ["article"],
   name: "ArticleDetail",
   components: {
     Article
   },
-  data() {
-    return this.$store.getters.articles[this.$route.params._id];
-  },
+  // data() {
+  //   return { articleData: this.$store.getters.articleData };
+  // },
   created() {
-    this.$store.dispatch("updateArticleDetails", this.$route.params._id);
+    this.$store.dispatch("loadSeparateArticle", this.$route.params._id);
+  },
+  computed: {
+    articleData: function() {
+      return this.$store.getters.articleData;
+    }
   }
 };
 </script>

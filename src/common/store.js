@@ -121,7 +121,7 @@ const registration = {
           state.registrationData.registrationOk = true;
           state.registrationData.registrationError = false;
         })
-        .then(() => { });
+        .then(() => {});
     }
   },
   actions: {
@@ -138,6 +138,35 @@ const registration = {
     },
     registrationError(state) {
       return state.registrationData.registrationError;
+    }
+  }
+};
+
+const separateArticle = {
+  state: {
+    article: {},
+    loadError: false
+  },
+  mutations: {
+    LOAD_ARTICLE(state, id) {
+      fetch(`http://localhost:3000/articles/${id}`, { mode: "cors" })
+        .then(resp => resp.json())
+        .then(response => {
+          state.article = response;
+        });
+    }
+  },
+  actions: {
+    loadSeparateArticle({ commit }, id) {
+      commit("LOAD_ARTICLE", id);
+    }
+  },
+  getters: {
+    articleData(state) {
+      return state.article;
+    },
+    articleLoadError(state) {
+      return state.loadError;
     }
   }
 };
@@ -171,16 +200,6 @@ const articles = {
           state.articles = response;
         })
         .catch();
-    },
-    UPDATE_ARTICLE_DETAILES(state, id) {
-      let currentArticle = state.articles.find(value => value._id == id);
-      if (currentArticle) {
-        fetch(`http://localhost:3000/articles/${id}`, { mode: "cors" })
-          .then(resp => resp.json())
-          .then(response => {
-            currentArticle = response;
-          })
-      }
     }
   },
   actions: {
@@ -189,9 +208,6 @@ const articles = {
     },
     loadArticles({ commit }) {
       commit("LOAD_ARTICLES");
-    },
-    updateArticleDetails({ commit }, id) {
-      commit("UPDATE_ARTICLE_DETAILES", id)
     }
   },
   getters: {
@@ -205,5 +221,11 @@ const articles = {
 };
 
 export const store = new Vuex.Store({
-  modules: { articles, mainPage, authentification, registration }
+  modules: {
+    articles,
+    mainPage,
+    authentification,
+    registration,
+    separateArticle
+  }
 });
