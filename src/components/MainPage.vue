@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <router-link to="/article/new" v-if="isAuthorized()">Add new</router-link>
+  <div class="mainpage-container">
+    <div class="add-new-article-link-container">
+      <router-link class="add-new-article-link" to="/article/new" v-if="isAuthorized()">Add new</router-link>
+    </div>
     <h1>
       {{pageData.title}}
     </h1>
@@ -36,5 +38,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .mainpage-container {
+    .add-new-article-link-container {
+      width: 100%;
+
+      .add-new-article-link {
+        color: black;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: right;
+      }
+    }
+  }
 </style>

@@ -57,9 +57,9 @@ export default {
 .auth-container {
   .logon-button-container {
     .logout-button {
-      width: 20em;
-      height: 2em;
-      font-size: 1.5em;
+      width: 100px;
+      height: 30px;
+      font-size: 15px;
     }
   }
   .login-btn {

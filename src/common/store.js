@@ -154,11 +154,17 @@ const separateArticle = {
         .then(response => {
           state.article = response;
         });
+    },
+    CLEAR_CURRENT_ARTICLE(state) {
+      state.article = {};
     }
   },
   actions: {
     loadSeparateArticle({ commit }, id) {
       commit("LOAD_ARTICLE", id);
+    },
+    clearCurrentArticle({ commit }) {
+      commit("CLEAR_CURRENT_ARTICLE");
     }
   },
   getters: {
@@ -213,7 +219,7 @@ const articles = {
         .then(resp => resp.json())
         .then(response => {
           state.articles = response;
-          state.separateArticle = {};
+          state.article = {};
         })
         .catch();
     }

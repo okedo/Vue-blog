@@ -18,6 +18,7 @@
 
 <script>
 import Article from "./Article.vue";
+import { router } from "../common/routerModule.js";
 
 export default {
   props: ["article"],
@@ -41,7 +42,11 @@ export default {
   methods: {
     removeArticle() {
       this.$store.dispatch("removeArticle", this.$route.params._id);
+      router.push("/");
     }
+  },
+  destroyed() {
+    this.$store.dispatch("clearCurrentArticle");
   }
 };
 </script>
