@@ -1,20 +1,33 @@
 <template>
-<div>
-  <div v-if="!registrationSuccess()">
-   <input type="text" v-model="newLogin" name="login" id="newLogin">
-   <input type="password" v-model="newPassword" name="newPassword" id="newPassword" placeholder="password">
-   <input type="password" v-model="newPasswordConfirmation" name="newPasswordConfirmation" id="newPasswordConfirmation" placeholder="repeat password">
-   <button v-on:click="registerNewUser">register</button>
+  <div class="registration-container">
+    <div class="registration-form-container" v-if="!registrationSuccess()">
+      <div class="registration-form">
+        <div>
+          <span class="form-label">Enter your login</span>
+          <input class="registration-form-login registration-form-common" type="text" v-model="newLogin" name="login" id="newLogin">
+        </div>
+        <div>
+          <span class="form-label">Enter your password</span>          
+          <input class="registration-form-password registration-form-common" type="password" v-model="newPassword" name="newPassword" id="newPassword" placeholder="password">
+        </div>
+        <div>
+          <span class="form-label">Confirm your password</span>          
+          <input class="registration-form-password-confirmation registration-form-common" type="password" v-model="newPasswordConfirmation" name="newPasswordConfirmation" id="newPasswordConfirmation" placeholder="repeat password">
+        </div>
+        <div>
+          <button class="registration-form-register-button registration-form-common" v-on:click="registerNewUser">Register</button>
+        </div>
+      </div>
+    </div>
+    <div class="registration-notification-container">
+      <span class="registration-success" v-if="registrationFail() && !registrationSuccess()">
+        Registration error! - {{registrationFail()}}
+      </span>
+      <span class="registration-fail" v-if="!registrationFail() && registrationSuccess()">
+        Registration completed!
+      </span>
+    </div>
   </div>
-  <div>
-    <span v-if="registrationFail() && !registrationSuccess()">
-      Registration error! - {{registrationFail()}}
-    </span>
-    <span v-if="!registrationFail() && registrationSuccess()">
-      Registration completed!
-    </span>
-  </div>
-</div>
 </template>
 
 <script>
@@ -67,5 +80,46 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.registration-container {
+  .registration-form-container {
+    display: block;
+    width: 100%;
+
+    .registration-form {
+      margin: auto;
+
+      .form-label {
+        margin: 0 10px;
+        font-size: 1.5em;
+      }
+
+      .registration-form-common {
+        height: 2em;
+        width: 20em;
+        font-size: 1.5em;
+        display: inline-block;
+        margin: 4px 10px;
+      }
+      .registration-form-login {
+      }
+      .registration-form-password {
+      }
+      .registration-form-password-confirmation {
+      }
+      .registration-form-register-button {
+      }
+    }
+  }
+
+  .registration-notification-container {
+    .registration-fail {
+      color: red;
+    }
+    .registration-success {
+      color: red;
+    }
+  }
+}
 </style>
+

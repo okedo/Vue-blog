@@ -4,7 +4,7 @@
     <button>
       Edit
     </button>
-    <button>
+    <button v-on:click="removeArticle()">
       Delete
     </button>
   </div>
@@ -36,6 +36,11 @@ export default {
   computed: {
     articleData: function() {
       return this.$store.getters.articleData;
+    }
+  },
+  methods: {
+    removeArticle() {
+      this.$store.dispatch("removeArticle", this.$route.params._id);
     }
   }
 };
