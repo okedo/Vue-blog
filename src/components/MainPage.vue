@@ -7,9 +7,7 @@
     <div>
       {{pageData.text}}
     </div>
-    <div class="article-container" v-for="article in this.$store.getters.articles" v-bind:key="article.id">
-      <Article  v-bind:id="article.id" v-bind:article = "article"></Article>
-    </div>
+      <Article v-for="article in this.$store.getters.articles" v-bind:key="article.id" v-bind:id="article.id" v-bind:article = "article"></Article>
     <div v-if="loadArticlesError()">Please reload page</div>
   </div>
 </template>
@@ -39,9 +37,4 @@ export default {
 </script>
 
 <style scoped>
-.article-container {
-  padding: 10px;
-  margin: 10px 10%;
-  border: 1px solid black;
-}
 </style>

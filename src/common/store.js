@@ -200,6 +200,22 @@ const articles = {
           state.articles = response;
         })
         .catch();
+    },
+    REMOVE_ARTICLE(state, id) {
+      fetch("http://localhost:3000/articles/remove/", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify({ id: id })
+      })
+        .then(resp => resp.json())
+        .then(response => {
+          state.articles = response;
+          state.separateArticle = {};
+        })
+        .catch();
     }
   },
   actions: {
@@ -208,6 +224,9 @@ const articles = {
     },
     loadArticles({ commit }) {
       commit("LOAD_ARTICLES");
+    },
+    removeArticle({ commit }, id) {
+      commit("REMOVE_ARTICLE", id);
     }
   },
   getters: {

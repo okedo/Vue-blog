@@ -1,6 +1,13 @@
 <template>
  <div>
-  <div v-if="isLogged"></div>
+  <div v-if="isLogged">
+    <button>
+      Edit
+    </button>
+    <button>
+      Delete
+    </button>
+  </div>
   <img src="articleData.imgSrc"/>
   <Article v-bind:article = "articleData" v-bind:key="articleData._id"></Article>
   <div>
