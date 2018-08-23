@@ -1,6 +1,6 @@
 <template>
  <div>
-  <div v-if="isLogged">
+  <div v-if="isLogged && isAuthor">
     <button>
       Edit
     </button>
@@ -26,17 +26,21 @@ export default {
   components: {
     Article
   },
-  data() {
-    return {
-      isLogged: this.$store.getters.isLogged
-    };
-  },
   created() {
     this.$store.dispatch("loadSeparateArticle", this.$route.params._id);
   },
   computed: {
     articleData: function() {
       return this.$store.getters.articleData;
+    },
+    userId: function() {
+      return this.$store.getters.userData.userId;
+    },
+    isLogged: function() {
+      return this.$store.getters.isLogged;
+    },
+    isAuthor: function() {
+      return this.articleData.userId && this.articleData.userId === this.userId;
     }
   },
   methods: {

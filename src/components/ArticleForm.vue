@@ -25,7 +25,8 @@ export default {
     save() {
       this.$store.dispatch("addArticle", {
         title: this.title,
-        text: this.text
+        text: this.text,
+        userId: this.userId
       });
     }
   }
