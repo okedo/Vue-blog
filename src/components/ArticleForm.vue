@@ -1,5 +1,6 @@
 <template>
   <div class="article-form-container">
+    <router-link :to="'/'" class="main-page-link">Main page</router-link>
     <div class="article-form">
       <div>
         <input v-model="articleData.title" class="article-form-title-input" type="text" placeholder="Enter aricle name here:"/>
@@ -69,6 +70,13 @@ export default {
 
 <style lang="scss" scoped>
 .article-form-container {
+  .main-page-link {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
   .article-form {
     .article-form-title-input {
       min-width: 300px;

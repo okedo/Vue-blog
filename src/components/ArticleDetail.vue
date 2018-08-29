@@ -1,5 +1,6 @@
 <template>
  <div class="article-detail-container">
+    <router-link :to="'/'" class="main-page-link">Main page</router-link>
   <div class="author-controls-container" v-if="isLogged && isAuthor">
     <button v-on:click="editArticle()" class="edit-button button-common">
       Edit
@@ -62,6 +63,13 @@ export default {
 
 <style lang="scss" scoped>
 .article-detail-container {
+  .main-page-link {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
   .author-controls-container {
     .button-common {
       font-size: 1.5em;
