@@ -7,7 +7,7 @@
         {{article.title}}
       </router-link>
       <div>
-        {{article.text}}
+        {{article.description}}
       </div>
     </div>
   </div>

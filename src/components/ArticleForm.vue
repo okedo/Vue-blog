@@ -5,7 +5,10 @@
         <input v-model="title" class="article-form-title-input" type="text" placeholder="Enter aricle name here:"/>
       </div>
       <div>
-        <textarea v-model="text" class="article-form-text-input" placeholder=""></textarea>
+        <textarea v-model="description" class="article-form-description-input" placeholder="Description"></textarea>
+      </div>
+      <div>
+        <textarea v-model="text" class="article-form-text-input" placeholder="Enter text here"></textarea>
       </div>
       <div>
         <button v-on:click="save" class="article-form-save article-form-buttons">Save</button>
@@ -25,23 +28,30 @@ export default {
     return {
       title: "",
       text: "",
-      userId: this.$store.getters.userData.userId
+      description: "",
     };
   },
   mounted() {
     this.data = {};
+  },
+  computed: {
+    userId: function(){
+      return this.$store.getters.userData.userId;
+    }
   },
   methods: {
     save() {
       this.$store.dispatch("addArticle", {
         title: this.title,
         text: this.text,
-        userId: this.userId
+        userId: this.userId,
+        description: this.description
       });
     },
     undo() {
       this.title = "";
       this.text = "";
+      this.description = "";
     }
   }
 };
@@ -66,6 +76,13 @@ export default {
     }
     .article-form-save {
       margin: 10px;
+    }
+    .article-form-description-input {
+      margin: 10px;
+      min-width: 240px;
+      width: 75%;
+      padding: 10px;
+      font-size: 16px;
     }
     .article-form-undo {
     }

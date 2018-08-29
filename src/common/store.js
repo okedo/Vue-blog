@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { router } from "../common/routerModule.js";
 
 Vue.use(Vuex);
 
@@ -195,8 +196,8 @@ const articles = {
         .then(response => {
           return response.json();
         })
-        .then(data => {
-          state.articles.push(data);
+        .then(id => {
+          router.push(`/article/${id}`);
         });
     },
     LOAD_ARTICLES(state) {
