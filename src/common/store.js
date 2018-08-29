@@ -122,7 +122,9 @@ const registration = {
           state.registrationData.registrationOk = true;
           state.registrationData.registrationError = false;
         })
-        .then(() => {});
+        .then(() => {
+          router.push("/");
+        });
     }
   },
   actions: {
