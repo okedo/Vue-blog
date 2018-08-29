@@ -20,6 +20,11 @@ export const router = new VueRouter({
             component: ArticleForm
         },
         {
+            path: '/article/edit/:id',
+            name: 'add-article',
+            component: ArticleForm
+        },
+        {
             path: '/article/:_id',
             name: 'article-detail',
             component: ArticleDetail

@@ -160,6 +160,9 @@ const separateArticle = {
     },
     CLEAR_CURRENT_ARTICLE(state) {
       state.article = {};
+    },
+    UPDATE_ARTICLE_DATA_FROM_FORM(state, data) {
+      state.article = data;
     }
   },
   actions: {
@@ -168,6 +171,9 @@ const separateArticle = {
     },
     clearCurrentArticle({ commit }) {
       commit("CLEAR_CURRENT_ARTICLE");
+    },
+    updateArticleDataFromForm({ commit }, data) {
+      commit("UPDATE_ARTICLE_DATA_FROM_FORM", data);
     }
   },
   getters: {
@@ -188,6 +194,22 @@ const articles = {
   mutations: {
     ADD_ARTICLE(state, article) {
       fetch("http://localhost:3000/articles/new", {
+        method: "post",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(article)
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(id => {
+          router.push(`/article/${id}`);
+        });
+    },
+    UPDATE_ARTICLE(state, article) {
+      fetch("http://localhost:3000/articles/update", {
         method: "post",
         mode: "cors",
         headers: {
@@ -230,6 +252,9 @@ const articles = {
   actions: {
     addArticle({ commit }, article) {
       commit("ADD_ARTICLE", article);
+    },
+    updateArticle({ commit }, article) {
+      commit("UPDATE_ARTICLE", article);
     },
     loadArticles({ commit }) {
       commit("LOAD_ARTICLES");

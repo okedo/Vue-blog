@@ -2,16 +2,16 @@
   <div class="article-form-container">
     <div class="article-form">
       <div>
-        <input v-model="title" class="article-form-title-input" type="text" placeholder="Enter aricle name here:"/>
+        <input v-model="articleData.title" class="article-form-title-input" type="text" placeholder="Enter aricle name here:"/>
       </div>
       <div>
-        <textarea v-model="description" class="article-form-description-input" placeholder="Description"></textarea>
+        <textarea v-model="articleData.description" class="article-form-description-input" placeholder="Description"></textarea>
       </div>
       <div>
-        <textarea v-model="text" class="article-form-text-input" placeholder="Enter text here"></textarea>
+        <textarea v-model="articleData.text" class="article-form-text-input" placeholder="Enter text here"></textarea>
       </div>
       <div>
-        <button v-on:click="save" class="article-form-save article-form-buttons">Save</button>
+        <button :disabled="!isAuthorized()" v-on:click="save" class="article-form-save article-form-buttons">Save</button>
       </div>
       <div>
         <button v-on:click="undo" class="article-form-undo article-form-buttons">Undo</button>
@@ -24,34 +24,44 @@
 export default {
   name: "ArticleForm",
   props: [],
-  data() {
-    return {
-      title: "",
-      text: "",
-      description: "",
-    };
-  },
-  mounted() {
-    this.data = {};
+  created() {
+    if (this.$route.params.id) {
+      this.$store.dispatch("loadSeparateArticle", this.$route.params.id);
+    } else {
+      this.$store.dispatch("clearCurrentArticle");
+    }
   },
   computed: {
-    userId: function(){
+    userId: function() {
       return this.$store.getters.userData.userId;
+    },
+    articleData: {
+      get() {
+        return this.$store.getters.articleData;
+      },
+      set(value) {
+        this.$store.commit("updateArticleDataFromForm", value);
+      }
     }
   },
   methods: {
     save() {
-      this.$store.dispatch("addArticle", {
-        title: this.title,
-        text: this.text,
-        userId: this.userId,
-        description: this.description
-      });
+      if (this.$route.params.id) {
+        this.$store.dispatch("updateArticle", this.articleData);
+      } else {
+        this.$store.dispatch("addArticle", {
+          title: this.articleData.title,
+          text: this.articleData.text,
+          description: this.articleData.description,
+          userId: this.userId
+        });
+      }
     },
     undo() {
-      this.title = "";
-      this.text = "";
-      this.description = "";
+      this.$store.commit("updateArticleDataFromForm", {});
+    },
+    isAuthorized() {
+      return this.$store.getters.isLogged;
     }
   }
 };

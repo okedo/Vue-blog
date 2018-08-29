@@ -1,7 +1,7 @@
 <template>
  <div class="article-detail-container">
   <div class="author-controls-container" v-if="isLogged && isAuthor">
-    <button class="edit-button button-common">
+    <button v-on:click="editArticle()" class="edit-button button-common">
       Edit
     </button>
     <button class="delete-button button-common" v-on:click="removeArticle()">
@@ -42,12 +42,16 @@ export default {
     },
     isAuthor: function() {
       return this.articleData.userId && this.articleData.userId === this.userId;
+      // TODO resolve this at API
     }
   },
   methods: {
     removeArticle() {
       this.$store.dispatch("removeArticle", this.$route.params._id);
       router.push("/");
+    },
+    editArticle() {
+      router.push(`/article/edit/${this.$route.params._id}`);
     }
   },
   destroyed() {
