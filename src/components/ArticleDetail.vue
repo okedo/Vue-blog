@@ -29,6 +29,7 @@ export default {
   props: ["article"],
   name: "ArticleDetail",
   created() {
+    this.$store.dispatch("getValidToken");
     this.$store.dispatch("loadSeparateArticle", this.$route.params._id);
   },
   computed: {

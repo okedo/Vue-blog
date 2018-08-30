@@ -26,6 +26,7 @@ export default {
   name: "ArticleForm",
   props: [],
   created() {
+    this.$store.dispatch("getValidToken");
     if (this.$route.params.id) {
       this.$store.dispatch("loadSeparateArticle", this.$route.params.id);
     } else {

@@ -46,7 +46,6 @@ const mainPage = {
 
 const authentification = {
   state: {
-    isLogged: false,
     userId: "",
     login: "",
     errorMessage: "",
@@ -64,31 +63,48 @@ const authentification = {
           return response.json();
         })
         .then(data => {
-          state.isLogged = !!data;
           state.userId = data.id;
           state.login = data.login;
           state.userToken = data.userToken;
           setCookie("userToken", data.userToken);
         })
         .catch(error => {
-          state.isLogged = false;
           state.errorMessage = error.message;
         });
     },
     LOG_OUT(state) {
-      state.isLogged = false;
       state.userId = "";
       state.login = "";
       state.errorMessage = "";
       deleteCookie("userToken");
     },
-    SET_STORE_TOKEN(state) {
-      state.userToken = getCookie("userToken");
+    GET_VALID_TOKEN(state) {
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        fetch("http://localhost:3000/refresh", {
+          method: "post",
+          mode: "cors",
+          body: JSON.stringify({ userToken: userToken }),
+          headers: commonHeaders
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            state.userId = data.id;
+            state.login = data.login;
+            state.userToken = data.userToken;
+            setCookie("userToken", data.userToken);
+          })
+          .catch(error => {
+            state.errorMessage = error.message;
+          });
+      }
     }
   },
   actions: {
-    setStoreToken({ commit }) {
-      commit("SET_STORE_TOKEN");
+    getValidToken({ commit }) {
+      commit("GET_VALID_TOKEN");
     },
     logOn({ commit }, credentials) {
       commit("LOG_ON", credentials);
@@ -99,7 +115,7 @@ const authentification = {
   },
   getters: {
     isLogged(state) {
-      return state.isLogged;
+      return state.userToken && state.login;
     },
     userData(state) {
       return {
@@ -109,6 +125,9 @@ const authentification = {
     },
     authError(state) {
       return state.errorMessage;
+    },
+    userToken(state) {
+      return state.userToken;
     }
   }
 };
@@ -164,7 +183,8 @@ const registration = {
 const separateArticle = {
   state: {
     article: {},
-    loadError: false
+    loadError: false,
+    isEditable: false
   },
   mutations: {
     LOAD_ARTICLE(state, id) {
@@ -201,6 +221,9 @@ const separateArticle = {
     },
     articleLoadError(state) {
       return state.loadError;
+    },
+    isEditable(state) {
+      return state.isEditable;
     }
   }
 };
