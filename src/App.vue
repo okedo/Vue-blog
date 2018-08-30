@@ -19,7 +19,6 @@ export default {
   },
   created() {
     this.$store.dispatch("loadMainPage");
-    this.$store.dispatch("loadArticles");
   }
 };
 </script>

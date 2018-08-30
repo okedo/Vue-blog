@@ -1,8 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { router } from "../common/routerModule.js";
+import { router } from "./../common/routerModule.js";
+import {
+  setCookie,
+  getCookie,
+  deleteCookie
+} from "./../common/cookie.service.js";
 
 Vue.use(Vuex);
+
+export const commonHeaders = new Headers({
+  "Content-Type": "application/json",
+  userToken: getCookie("userToken") ? getCookie("userToken") : ""
+});
 
 const mainPage = {
   state: {
@@ -39,7 +49,8 @@ const authentification = {
     isLogged: false,
     userId: "",
     login: "",
-    errorMessage: ""
+    errorMessage: "",
+    userToken: ""
   },
   mutations: {
     LOG_ON(state, credentials) {
@@ -47,9 +58,7 @@ const authentification = {
         method: "post",
         mode: "cors",
         body: JSON.stringify(credentials),
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        }
+        headers: commonHeaders
       })
         .then(response => {
           return response.json();
@@ -58,6 +67,8 @@ const authentification = {
           state.isLogged = !!data;
           state.userId = data.id;
           state.login = data.login;
+          state.userToken = data.userToken;
+          setCookie("userToken", data.userToken);
         })
         .catch(error => {
           state.isLogged = false;
@@ -69,9 +80,16 @@ const authentification = {
       state.userId = "";
       state.login = "";
       state.errorMessage = "";
+      deleteCookie("userToken");
+    },
+    SET_STORE_TOKEN(state) {
+      state.userToken = getCookie("userToken");
     }
   },
   actions: {
+    setStoreToken({ commit }) {
+      commit("SET_STORE_TOKEN");
+    },
     logOn({ commit }, credentials) {
       commit("LOG_ON", credentials);
     },
@@ -111,9 +129,7 @@ const registration = {
         method: "post",
         mode: "cors",
         body: JSON.stringify(userData),
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        }
+        headers: commonHeaders
       })
         .then(response => {
           return response.json();
@@ -152,7 +168,10 @@ const separateArticle = {
   },
   mutations: {
     LOAD_ARTICLE(state, id) {
-      fetch(`http://localhost:3000/articles/${id}`, { mode: "cors" })
+      fetch(`http://localhost:3000/articles/${id}`, {
+        mode: "cors",
+        headers: commonHeaders
+      })
         .then(resp => resp.json())
         .then(response => {
           state.article = response;
@@ -196,9 +215,7 @@ const articles = {
       fetch("http://localhost:3000/articles/new", {
         method: "post",
         mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
+        headers: commonHeaders,
         body: JSON.stringify(article)
       })
         .then(response => {
@@ -212,9 +229,7 @@ const articles = {
       fetch("http://localhost:3000/articles/update", {
         method: "post",
         mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
+        headers: commonHeaders,
         body: JSON.stringify(article)
       })
         .then(response => {
@@ -225,7 +240,10 @@ const articles = {
         });
     },
     LOAD_ARTICLES(state) {
-      fetch("http://localhost:3000/articles", { mode: "cors" })
+      fetch("http://localhost:3000/articles", {
+        mode: "cors",
+        headers: commonHeaders
+      })
         .then(resp => resp.json())
         .then(response => {
           state.articles = response;
@@ -236,9 +254,7 @@ const articles = {
       fetch("http://localhost:3000/articles/remove/", {
         method: "post",
         mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
+        headers: commonHeaders,
         body: JSON.stringify({ id: id })
       })
         .then(resp => resp.json())
