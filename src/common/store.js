@@ -78,33 +78,34 @@ const authentification = {
       state.errorMessage = "";
       deleteCookie("userToken");
     },
-    GET_VALID_TOKEN(state) {
-      const userToken = getCookie("userToken");
-      if (userToken) {
-        fetch("http://localhost:3000/refresh", {
-          method: "post",
-          mode: "cors",
-          body: JSON.stringify({ userToken: userToken }),
-          headers: commonHeaders
-        })
-          .then(response => {
-            return response.json();
-          })
-          .then(data => {
-            state.userId = data.id;
-            state.login = data.login;
-            state.userToken = data.userToken;
-            setCookie("userToken", data.userToken);
-          })
-          .catch(error => {
-            state.errorMessage = error.message;
-          });
-      }
+    GET_VALID_TOKEN(state, data) {
+      state.userId = data.id;
+      state.login = data.login;
+      state.userToken = data.userToken;
+      setCookie("userToken", data.userToken);
+    },
+    SET_ERROR(state, data) {
+      state.errorMessage = data;
     }
   },
   actions: {
-    getValidToken({ commit }) {
-      commit("GET_VALID_TOKEN");
+    getValidToken({ commit }, userToken) {
+      return fetch("http://localhost:3000/refresh", {
+        method: "post",
+        mode: "cors",
+        body: JSON.stringify({ userToken: userToken }),
+        headers: commonHeaders
+      })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          commit("GET_VALID_TOKEN", data);
+          return data;
+        })
+        .catch(error => {
+          commit("SET_ERROR", error.message);
+        });
     },
     logOn({ commit }, credentials) {
       commit("LOG_ON", credentials);
@@ -187,9 +188,11 @@ const separateArticle = {
     isEditable: false
   },
   mutations: {
-    LOAD_ARTICLE(state, id) {
-      fetch(`http://localhost:3000/articles/${id}`, {
+    LOAD_ARTICLE(state, data) {
+      fetch(`http://localhost:3000/articles/${data.id}`, {
+        method: "post",
         mode: "cors",
+        body: JSON.stringify({ userToken: data.userToken }),
         headers: commonHeaders
       })
         .then(resp => resp.json())
@@ -205,8 +208,16 @@ const separateArticle = {
     }
   },
   actions: {
-    loadSeparateArticle({ commit }, id) {
-      commit("LOAD_ARTICLE", id);
+    loadSeparateArticle({ commit }, articleData) {
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        store.dispatch("getValidToken", userToken).then(data => {
+          articleData.userToken = data.userToken;
+          commit("LOAD_ARTICLE", articleData);
+        });
+      } else {
+        commit("LOAD_ARTICLE", data);
+      }
     },
     clearCurrentArticle({ commit }) {
       commit("CLEAR_CURRENT_ARTICLE");
@@ -235,7 +246,7 @@ const articles = {
   },
   mutations: {
     ADD_ARTICLE(state, article) {
-      fetch("http://localhost:3000/articles/new", {
+      fetch("http://localhost:3000/article/new", {
         method: "post",
         mode: "cors",
         headers: commonHeaders,
@@ -249,7 +260,7 @@ const articles = {
         });
     },
     UPDATE_ARTICLE(state, article) {
-      fetch("http://localhost:3000/articles/update", {
+      fetch("http://localhost:3000/article/update", {
         method: "post",
         mode: "cors",
         headers: commonHeaders,
@@ -273,12 +284,12 @@ const articles = {
         })
         .catch();
     },
-    REMOVE_ARTICLE(state, id) {
+    REMOVE_ARTICLE(state, data) {
       fetch("http://localhost:3000/articles/remove/", {
         method: "post",
         mode: "cors",
         headers: commonHeaders,
-        body: JSON.stringify({ id: id })
+        body: JSON.stringify(data)
       })
         .then(resp => resp.json())
         .then(response => {
@@ -289,17 +300,41 @@ const articles = {
     }
   },
   actions: {
-    addArticle({ commit }, article) {
-      commit("ADD_ARTICLE", article);
+    addArticle({ commit }, articleData) {
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        store.dispatch("getValidToken", userToken).then(data => {
+          articleData.userToken = data.userToken;
+          commit("ADD_ARTICLE", articleData);
+        });
+      } else {
+        commit("articleLoadError", "not logged");
+      }
     },
-    updateArticle({ commit }, article) {
-      commit("UPDATE_ARTICLE", article);
+    updateArticle({ commit }, articleData) {
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        store.dispatch("getValidToken", userToken).then(data => {
+          articleData.userToken = data.userToken;
+          commit("UPDATE_ARTICLE", articleData);
+        });
+      } else {
+        commit("articleLoadError", "not logged");
+      }
     },
     loadArticles({ commit }) {
       commit("LOAD_ARTICLES");
     },
-    removeArticle({ commit }, id) {
-      commit("REMOVE_ARTICLE", id);
+    removeArticle({ commit }, articleData) {
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        store.dispatch("getValidToken", userToken).then(data => {
+          articleData.userToken = data.userToken;
+          commit("REMOVE_ARTICLE", articleData);
+        });
+      } else {
+        commit("articleLoadError", "not logged");
+      }
     }
   },
   getters: {
