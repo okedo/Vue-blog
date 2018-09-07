@@ -27,6 +27,10 @@ export default {
       pageData: this.$store.getters.mainPageData
     };
   },
+  created() {
+    this.$store.dispatch("getValidToken");
+    this.$store.dispatch("loadArticles");
+  },
   methods: {
     isAuthorized() {
       return this.$store.getters.isLogged;
@@ -39,17 +43,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .mainpage-container {
-    .add-new-article-link-container {
-      width: 100%;
+.mainpage-container {
+  .add-new-article-link-container {
+    width: 100%;
 
-      .add-new-article-link {
-        color: black;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: right;
-      }
+    .add-new-article-link {
+      color: black;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
     }
   }
+}
 </style>

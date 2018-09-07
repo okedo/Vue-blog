@@ -1,7 +1,7 @@
 <template>
  <div class="article-detail-container">
     <router-link :to="'/'" class="main-page-link">Main page</router-link>
-  <div class="author-controls-container" v-if="isLogged && isAuthor">
+  <div class="author-controls-container" v-if="isLogged && isAutor">
     <button v-on:click="editArticle()" class="edit-button button-common">
       Edit
     </button>
@@ -29,9 +29,14 @@ export default {
   props: ["article"],
   name: "ArticleDetail",
   created() {
-    this.$store.dispatch("loadSeparateArticle", this.$route.params._id);
+    this.$store.dispatch("loadSeparateArticle", {
+      id: this.$route.params._id
+    });
   },
   computed: {
+    userToken: function() {
+      return this.$store.getters.userToken;
+    },
     articleData: function() {
       return this.$store.getters.articleData;
     },
@@ -41,14 +46,15 @@ export default {
     isLogged: function() {
       return this.$store.getters.isLogged;
     },
-    isAuthor: function() {
-      return this.articleData.userId && this.articleData.userId === this.userId;
-      // TODO resolve this at API
+    isAutor: function() {
+      return this.articleData.isAutor;
     }
   },
   methods: {
     removeArticle() {
-      this.$store.dispatch("removeArticle", this.$route.params._id);
+      this.$store.dispatch("removeArticle", {
+        id: this.$route.params._id
+      });
       router.push("/");
     },
     editArticle() {

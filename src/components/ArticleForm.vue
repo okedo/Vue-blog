@@ -27,14 +27,16 @@ export default {
   props: [],
   created() {
     if (this.$route.params.id) {
-      this.$store.dispatch("loadSeparateArticle", this.$route.params.id);
+      this.$store.dispatch("loadSeparateArticle", {
+        id: this.$route.params.id
+      });
     } else {
       this.$store.dispatch("clearCurrentArticle");
     }
   },
   computed: {
-    userId: function() {
-      return this.$store.getters.userData.userId;
+    userToken: function() {
+      return this.$store.getters.userToken;
     },
     articleData: {
       get() {
@@ -54,7 +56,7 @@ export default {
           title: this.articleData.title,
           text: this.articleData.text,
           description: this.articleData.description,
-          userId: this.userId
+          userToken: this.userToken
         });
       }
     },
