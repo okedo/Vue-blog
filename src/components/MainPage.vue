@@ -28,7 +28,6 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("getValidToken");
     this.$store.dispatch("loadArticles");
   },
   methods: {

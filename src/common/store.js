@@ -323,7 +323,14 @@ const articles = {
       }
     },
     loadArticles({ commit }) {
-      commit("LOAD_ARTICLES");
+      const userToken = getCookie("userToken");
+      if (userToken) {
+        store.dispatch("getValidToken", userToken).then(data => {
+          commit("LOAD_ARTICLES");
+        });
+      } else {
+        commit("LOAD_ARTICLES");
+      }
     },
     removeArticle({ commit }, articleData) {
       const userToken = getCookie("userToken");
